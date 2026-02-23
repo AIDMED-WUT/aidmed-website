@@ -1,0 +1,123 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const seminars = await getCollection('seminars');
+  return seminars.map((seminar) => ({
+    params: { slug: seminar.slug },
+    props: { seminar },
+  }));
+}
+
+const { seminar } = Astro.props;
+const { data } = seminar;
+const { Content } = await render(seminar);
+
+const dateFormatted = new Date(data.date).toLocaleDateString('en-GB', {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: data.title,
+  startDate: data.date,
+  location: {
+    '@type': 'Place',
+    name: 'Faculty MiNI WUT, Room 318',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Koszykowa 75',
+      addressLocality: 'Warsaw',
+      postalCode: '00-662',
+      addressCountry: 'PL',
+    },
+  },
+  organizer: {
+    '@type': 'Organization',
+    name: 'AIDMED',
+  },
+  performer: {
+    '@type': 'Person',
+    name: data.speaker,
+  },
+};
+---
+
+<Layout
+  title={`${data.title} – AIDMED Seminars`}
+  description={data.abstract ?? `AIDMED Seminar: ${data.speaker}`}
+  lang="en"
+  alternateHref={`/seminaria/${seminar.slug}`}
+  altLang="pl"
+  ogType="event"
+  jsonLd={jsonLd}
+>
+  <Header lang="en" alternateHref={`/seminaria/${seminar.slug}`} currentPath={`/en/seminars/${seminar.slug}`} />
+
+  <main class="flex-1">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+      <a href="/en/seminars" class="text-sm text-szafirowy hover:underline mb-6 inline-block">
+        ← Back to seminars
+      </a>
+
+      <article>
+        <header class="mb-8">
+          <time datetime={data.date} class="text-sm text-gray-500 font-mono">{dateFormatted}</time>
+          <h1 class="text-2xl sm:text-3xl font-bold text-grafitowy mt-2 leading-tight">
+            {data.title}
+          </h1>
+          {data.title_pl && (
+            <p class="text-base text-gray-500 mt-1 italic">{data.title_pl}</p>
+          )}
+
+          <div class="mt-4 p-4 bg-surface rounded-lg border border-gray-100">
+            <dl class="grid sm:grid-cols-2 gap-3 text-sm">
+              <div>
+                <dt class="font-medium text-gray-500">Speaker</dt>
+                <dd class="text-grafitowy">{data.speaker}</dd>
+              </div>
+              {(data.affiliation_en ?? data.affiliation_pl) && (
+                <div>
+                  <dt class="font-medium text-gray-500">Affiliation</dt>
+                  <dd class="text-grafitowy">{data.affiliation_en ?? data.affiliation_pl}</dd>
+                </div>
+              )}
+              {data.slides && (
+                <div>
+                  <dt class="font-medium text-gray-500">Materials</dt>
+                  <dd>
+                    <a href={data.slides} class="text-szafirowy hover:underline" target="_blank" rel="noopener noreferrer">
+                      Slides (PDF)
+                    </a>
+                  </dd>
+                </div>
+              )}
+            </dl>
+          </div>
+        </header>
+
+        {(data.abstract || data.abstract_pl) && (
+          <section>
+            <h2 class="text-lg font-semibold text-grafitowy mb-3">Abstract</h2>
+            <div class="prose prose-gray max-w-none text-gray-700 leading-relaxed">
+              <p>{data.abstract ?? data.abstract_pl}</p>
+            </div>
+          </section>
+        )}
+
+        <div class="mt-8 prose prose-gray max-w-none">
+          <Content />
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <Footer lang="en" />
+</Layout>

@@ -1,0 +1,71 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  lang?: 'pl' | 'en';
+  canonicalURL?: string;
+  alternateHref?: string;
+  altLang?: string;
+  ogType?: string;
+  jsonLd?: Record<string, unknown>;
+}
+
+const {
+  title,
+  description,
+  lang = 'pl',
+  canonicalURL,
+  alternateHref,
+  altLang,
+  ogType = 'website',
+  jsonLd,
+} = Astro.props;
+
+const siteUrl = 'https://pages.mini.pw.edu.pl/~aidmed/';
+const canonical = canonicalURL ?? siteUrl + Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="AIDMED" />
+    <meta property="og:locale" content={lang === 'pl' ? 'pl_PL' : 'en_US'} />
+
+    <!-- hreflang -->
+    {alternateHref && altLang && (
+      <link rel="alternate" hreflang={altLang} href={alternateHref} />
+    )}
+    <link rel="alternate" hreflang={lang} href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={siteUrl + '/'} />
+
+    <!-- JSON-LD -->
+    {jsonLd && (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+    )}
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-white min-h-screen flex flex-col">
+    <slot />
+  </body>
+</html>

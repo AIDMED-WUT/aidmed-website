@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import TeamMemberCard from '../components/TeamMemberCard.astro';
+import { getCollection } from 'astro:content';
+
+const team = await getCollection('team');
+team.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+const activeMembers = team.filter(m => m.data.active);
+---
+
+<Layout
+  title="Zespół – AIDMED | Wydział MiNI PW"
+  description="Członkowie grupy badawczej AIDMED – pracownicy i doktoranci Wydziału MiNI Politechniki Warszawskiej."
+  lang="pl"
+  alternateHref="/en/team"
+  altLang="en"
+>
+  <Header lang="pl" alternateHref="/en/team" currentPath="/zespol" />
+
+  <main class="flex-1">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+      <header class="mb-8">
+        <h1 class="text-3xl font-bold text-grafitowy mb-2">Zespół</h1>
+        <p class="text-gray-600">
+          Nieformalna grupa pracowników i doktorantów Wydziału MiNI PW zainteresowanych
+          komputerowo wspomaganą diagnostyką obrazów medycznych.
+        </p>
+      </header>
+
+      <div class="grid sm:grid-cols-2 gap-4">
+        {activeMembers.map(member => <TeamMemberCard member={member} lang="pl" />)}
+      </div>
+    </div>
+  </main>
+
+  <Footer lang="pl" />
+</Layout>

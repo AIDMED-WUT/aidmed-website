@@ -1,0 +1,88 @@
+type DeepString<T> = T extends string ? string : { [K in keyof T]: DeepString<T[K]> };
+
+export const pl = {
+  site: {
+    name: 'AIDMED',
+    tagline: 'Sztuczna Inteligencja w Medycynie',
+    description: 'Grupa badawcza AIDMED – komputerowo wspomagana diagnostyka obrazów medycznych. Wydział MiNI, Politechnika Warszawska.',
+  },
+  nav: {
+    home: 'Strona główna',
+    team: 'Zespół',
+    seminars: 'Seminaria',
+    publications: 'Publikacje',
+    projects: 'Projekty',
+    contact: 'Kontakt',
+  },
+  home: {
+    hero_title: 'AIDMED',
+    hero_subtitle: 'Artificial Intelligence in Medicine',
+    hero_desc: 'Nieformalny zespół naukowców i doktorantów zajmujących się komputerowo wspomaganą diagnostyką obrazów medycznych.',
+    about_title: 'O grupie',
+    about_text: 'AIDMED (Artificial Intelligence in MEDicine) to nieformalna grupa pracowników i doktorantów Wydziału Matematyki i Nauk Informacyjnych Politechniki Warszawskiej zainteresowanych komputerowo wspomaganą diagnostyką obrazów medycznych. Działamy od 2006 roku w Zakładzie Projektowania Systemów CAD/CAM i Komputerowego Wspomagania Medycyny.',
+    latest_seminar: 'Ostatnie seminarium',
+    recent_publication: 'Ostatnia publikacja',
+    team_size: 'Członkowie zespołu',
+    members: 'badaczy',
+    see_all_seminars: 'Wszystkie seminaria →',
+    see_all_publications: 'Wszystkie publikacje →',
+    meet_team: 'Poznaj zespół →',
+  },
+  seminars: {
+    title: 'Seminaria',
+    description: 'Seria seminariów „Informatyka w Medycynie i Biologii". Środy, godz. 12:30, sala 318, Wydział MiNI PW.',
+    series_name: 'Informatyka w Medycynie i Biologii',
+    schedule: 'Środy, 12:30, sala 318',
+    no_abstract: 'Brak streszczenia',
+    slides: 'Slajdy',
+    back: '← Powrót do seminariów',
+    speaker: 'Prelegent',
+    affiliation: 'Afiliacja',
+    abstract: 'Streszczenie',
+    date: 'Data',
+  },
+  publications: {
+    title: 'Publikacje',
+    description: 'Publikacje naukowe członków grupy AIDMED.',
+    journal: 'Artykuły w czasopismach',
+    book_chapter: 'Rozdziały w monografiach',
+    conference: 'Artykuły konferencyjne',
+    if_badge: 'IF',
+    doi: 'DOI',
+  },
+  team: {
+    title: 'Zespół',
+    description: 'Członkowie grupy badawczej AIDMED.',
+    research_areas: 'Obszary badań',
+  },
+  projects: {
+    title: 'Projekty',
+    description: 'Projekty badawcze realizowane przez grupę AIDMED.',
+    active: 'Aktywny',
+    completed: 'Zakończony',
+    grant: 'Grant',
+    period: 'Okres',
+    ddis_title: 'Baza danych DDIS',
+    ddis_desc: 'Cyfrowa Baza Danych Udaru Niedokrwiennego (DDIS) zawiera badania TK głowy pozyskane z warszawskich szpitali.',
+    ddis_i: 'DDIS I: 123 przypadki historyczne',
+    ddis_ii: 'DDIS II: 279 badań TK głowy',
+  },
+  contact: {
+    title: 'Kontakt',
+    description: 'Kontakt z grupą badawczą AIDMED.',
+    address: 'Adres',
+    email: 'E-mail',
+    web: 'Strona www',
+    location: 'Wydział Matematyki i Nauk Informacyjnych\nPolitechnika Warszawska\nul. Koszykowa 75\n00-662 Warszawa\nBudynek 5, pok. 556',
+  },
+  footer: {
+    copyright: '© 2006–2026 AIDMED, Wydział MiNI PW',
+    address: 'ul. Koszykowa 75, 00-662 Warszawa',
+  },
+  lang: {
+    switch_to: 'English',
+    current: 'Polski',
+  },
+} as const;
+
+export type Translations = DeepString<typeof pl>;

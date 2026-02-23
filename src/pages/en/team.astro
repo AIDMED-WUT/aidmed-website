@@ -1,0 +1,39 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import TeamMemberCard from '../../components/TeamMemberCard.astro';
+import { getCollection } from 'astro:content';
+
+const team = await getCollection('team');
+team.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+const activeMembers = team.filter(m => m.data.active);
+---
+
+<Layout
+  title="Team – AIDMED | Faculty MiNI WUT"
+  description="Members of the AIDMED research group – staff and doctoral students at the Faculty of Mathematics and Information Sciences, Warsaw University of Technology."
+  lang="en"
+  alternateHref="/zespol"
+  altLang="pl"
+>
+  <Header lang="en" alternateHref="/zespol" currentPath="/en/team" />
+
+  <main class="flex-1">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+      <header class="mb-8">
+        <h1 class="text-3xl font-bold text-grafitowy mb-2">Team</h1>
+        <p class="text-gray-600">
+          An informal group of staff and doctoral students at the Faculty of Mathematics and Information Sciences,
+          WUT, working on computer-aided medical image diagnostics.
+        </p>
+      </header>
+
+      <div class="grid sm:grid-cols-2 gap-4">
+        {activeMembers.map(member => <TeamMemberCard member={member} lang="en" />)}
+      </div>
+    </div>
+  </main>
+
+  <Footer lang="en" />
+</Layout>

@@ -1,0 +1,71 @@
+name: "Add Seminar"
+description: "Add a new seminar entry to the AIDMED website"
+title: "[Seminar] "
+labels: ["add-seminar"]
+body:
+  - type: input
+    id: date
+    attributes:
+      label: Date
+      description: Date of the seminar (YYYY-MM-DD format)
+      placeholder: "2025-03-19"
+    validations:
+      required: true
+
+  - type: input
+    id: speaker
+    attributes:
+      label: Speaker
+      description: Full name of the speaker
+      placeholder: "Jan Kowalski"
+    validations:
+      required: true
+
+  - type: input
+    id: affiliation_pl
+    attributes:
+      label: Affiliation (Polish)
+      description: Speaker's affiliation in Polish (optional)
+      placeholder: "Wydział MiNI PW"
+
+  - type: input
+    id: affiliation_en
+    attributes:
+      label: Affiliation (English)
+      description: Speaker's affiliation in English (optional)
+      placeholder: "Faculty of MiNI, WUT"
+
+  - type: input
+    id: title_en
+    attributes:
+      label: Title (English)
+      description: Seminar title in English
+      placeholder: "Computer-Aided Diagnosis of..."
+    validations:
+      required: true
+
+  - type: input
+    id: title_pl
+    attributes:
+      label: Title (Polish)
+      description: Seminar title in Polish (optional)
+      placeholder: "Komputerowe wspomaganie diagnostyki..."
+
+  - type: textarea
+    id: abstract_en
+    attributes:
+      label: Abstract (English)
+      description: Abstract in English (optional)
+
+  - type: textarea
+    id: abstract_pl
+    attributes:
+      label: Abstract (Polish)
+      description: Abstract in Polish (optional)
+
+  - type: input
+    id: slides
+    attributes:
+      label: Slides URL
+      description: URL to slides PDF (optional)
+      placeholder: "https://..."

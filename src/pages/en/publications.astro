@@ -1,0 +1,55 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PublicationItem from '../../components/PublicationItem.astro';
+import { getCollection } from 'astro:content';
+
+const publications = await getCollection('publications');
+publications.sort((a, b) => b.data.year - a.data.year || a.data.authors[0].localeCompare(b.data.authors[0]));
+
+const journals = publications.filter(p => p.data.type === 'journal');
+const chapters = publications.filter(p => p.data.type === 'book_chapter');
+const conference = publications.filter(p => p.data.type === 'conference');
+
+const sections = [
+  { label: 'Journal Articles', items: journals },
+  { label: 'Book Chapters', items: chapters },
+  { label: 'Conference Papers', items: conference },
+];
+---
+
+<Layout
+  title="Publications – AIDMED | Faculty MiNI WUT"
+  description="Scientific publications by the AIDMED research group: journal articles, book chapters, and conference papers."
+  lang="en"
+  alternateHref="/publikacje"
+  altLang="pl"
+>
+  <Header lang="en" alternateHref="/publikacje" currentPath="/en/publications" />
+
+  <main class="flex-1">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+      <header class="mb-8">
+        <h1 class="text-3xl font-bold text-grafitowy mb-2">Publications</h1>
+        <p class="text-gray-600">
+          Scientific publications by AIDMED group members.
+        </p>
+      </header>
+
+      {sections.map(({ label, items }) => items.length > 0 && (
+        <section class="mb-10">
+          <h2 class="text-xl font-semibold text-grafitowy mb-4 border-b border-gray-200 pb-2">
+            {label}
+            <span class="ml-2 text-sm font-normal text-gray-400">({items.length})</span>
+          </h2>
+          <div>
+            {items.map(pub => <PublicationItem pub={pub} lang="en" />)}
+          </div>
+        </section>
+      ))}
+    </div>
+  </main>
+
+  <Footer lang="en" />
+</Layout>

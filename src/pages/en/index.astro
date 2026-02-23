@@ -1,0 +1,149 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const seminars = await getCollection('seminars');
+seminars.sort((a, b) => b.data.date.localeCompare(a.data.date));
+const latestSeminar = seminars[0];
+
+const publications = await getCollection('publications');
+publications.sort((a, b) => b.data.year - a.data.year);
+const latestPub = publications[0];
+
+const team = await getCollection('team');
+const activeCount = team.filter(m => m.data.active).length;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'AIDMED',
+  description: 'Informal research group focused on computer-aided medical image diagnostics.',
+  url: 'https://pages.mini.pw.edu.pl/~aidmed/',
+  email: ' aidmed.mini@pw.edu.pl',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Koszykowa 75',
+    addressLocality: 'Warsaw',
+    postalCode: '00-662',
+    addressCountry: 'PL',
+  },
+  parentOrganization: {
+    '@type': 'CollegeOrUniversity',
+    name: 'Warsaw University of Technology',
+  },
+};
+---
+
+<Layout
+  title="AIDMED – Artificial Intelligence in Medicine | Faculty MiNI WUT"
+  description="AIDMED research group – computer-aided medical image diagnostics. Faculty of Mathematics and Information Sciences, Warsaw University of Technology."
+  lang="en"
+  alternateHref="/"
+  altLang="pl"
+  jsonLd={jsonLd}
+>
+  <Header lang="en" alternateHref="/" currentPath="/en/" />
+
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="bg-grafitowy text-white py-16 sm:py-20">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+        <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-3">AIDMED</h1>
+        <p class="text-szafirowy text-lg sm:text-xl font-medium mb-6">
+          Artificial Intelligence in Medicine
+        </p>
+        <p class="text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+          An informal research group of scientists and doctoral students working on computer-aided medical image diagnostics.
+        </p>
+      </div>
+    </section>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+
+      <!-- About -->
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold text-grafitowy mb-4">About the Group</h2>
+        <p class="text-gray-700 leading-relaxed">
+          AIDMED (<em>Artificial Intelligence in MEDicine</em>) is an informal group of staff and doctoral students
+          at the Faculty of Mathematics and Information Sciences, Warsaw University of Technology (WUT), interested
+          in computer-aided medical image diagnostics. We have been active since 2006 within the Department of
+          CAD/CAM Systems Design and Computer-Aided Medical Support.
+        </p>
+        <p class="text-gray-700 leading-relaxed mt-3">
+          Our research focuses on automated CT image analysis (stroke diagnosis) and mammography analysis
+          (breast cancer detection), as well as compressed sensing methods and medical knowledge representation.
+        </p>
+      </section>
+
+      <!-- Highlight cards -->
+      <section class="grid sm:grid-cols-3 gap-4 mb-12">
+
+        <!-- Latest seminar -->
+        <div class="bg-surface rounded-lg p-5 border border-gray-100">
+          <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Latest Seminar</p>
+          {latestSeminar ? (
+            <>
+              <p class="text-sm font-medium text-grafitowy leading-snug">{latestSeminar.data.title}</p>
+              <p class="text-xs text-gray-500 mt-1">{latestSeminar.data.speaker}</p>
+              <p class="text-xs text-gray-400 mt-1">
+                {new Date(latestSeminar.data.date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </p>
+            </>
+          ) : (
+            <p class="text-sm text-gray-500">No data</p>
+          )}
+          <a href="/en/seminars" class="mt-3 text-xs text-szafirowy hover:underline block">All seminars →</a>
+        </div>
+
+        <!-- Recent publication -->
+        <div class="bg-surface rounded-lg p-5 border border-gray-100">
+          <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Recent Publication</p>
+          {latestPub ? (
+            <>
+              <p class="text-sm font-medium text-grafitowy leading-snug">{latestPub.data.title}</p>
+              <p class="text-xs text-gray-500 mt-1">{latestPub.data.authors[0]}{latestPub.data.authors.length > 1 ? ' et al.' : ''}, {latestPub.data.year}</p>
+            </>
+          ) : (
+            <p class="text-sm text-gray-500">No data</p>
+          )}
+          <a href="/en/publications" class="mt-3 text-xs text-szafirowy hover:underline block">All publications →</a>
+        </div>
+
+        <!-- Team size -->
+        <div class="bg-surface rounded-lg p-5 border border-gray-100">
+          <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Team Members</p>
+          <p class="text-3xl font-bold text-szafirowy">{activeCount}</p>
+          <p class="text-sm text-gray-500 mt-1">researchers</p>
+          <a href="/en/team" class="mt-3 text-xs text-szafirowy hover:underline block">Meet the team →</a>
+        </div>
+      </section>
+
+      <!-- Navigation links -->
+      <section>
+        <h2 class="text-xl font-semibold text-grafitowy mb-4">Navigation</h2>
+        <div class="grid sm:grid-cols-2 gap-3">
+          {[
+            { href: '/en/team', label: 'Team', desc: 'Staff and doctoral students' },
+            { href: '/en/seminars', label: 'Seminars', desc: '"Computer Science in Medicine and Biology" series' },
+            { href: '/en/publications', label: 'Publications', desc: 'Journal articles, book chapters and conference papers' },
+            { href: '/en/projects', label: 'Projects', desc: 'Research projects and DDIS database' },
+            { href: '/en/contact', label: 'Contact', desc: 'Address and contact information' },
+          ].map(({ href, label, desc }) => (
+            <a
+              href={href}
+              class="flex flex-col p-4 border border-gray-200 rounded-lg hover:border-szafirowy hover:bg-surface transition-colors no-underline"
+            >
+              <span class="font-medium text-grafitowy">{label}</span>
+              <span class="text-sm text-gray-500 mt-0.5">{desc}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <Footer lang="en" />
+</Layout>

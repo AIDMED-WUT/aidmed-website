@@ -1,0 +1,82 @@
+---
+interface Props {
+  lang: 'pl' | 'en';
+  alternateHref: string;
+  currentPath: string;
+}
+
+const { lang, alternateHref, currentPath } = Astro.props;
+
+const isEn = lang === 'en';
+
+const navLinks = isEn
+  ? [
+      { href: '/en/', label: 'Home' },
+      { href: '/en/team', label: 'Team' },
+      { href: '/en/seminars', label: 'Seminars' },
+      { href: '/en/publications', label: 'Publications' },
+      { href: '/en/projects', label: 'Projects' },
+      { href: '/en/contact', label: 'Contact' },
+    ]
+  : [
+      { href: '/', label: 'Strona główna' },
+      { href: '/zespol', label: 'Zespół' },
+      { href: '/seminaria', label: 'Seminaria' },
+      { href: '/publikacje', label: 'Publikacje' },
+      { href: '/projekty', label: 'Projekty' },
+      { href: '/kontakt', label: 'Kontakt' },
+    ];
+
+function isActive(href: string) {
+  if (href === '/' || href === '/en/') return currentPath === href;
+  return currentPath.startsWith(href);
+}
+
+function linkClass(href: string) {
+  const base = 'text-sm font-medium no-underline transition-colors';
+  return isActive(href)
+    ? `${base} text-szafirowy border-b-2 border-szafirowy pb-0.5`
+    : `${base} text-grafitowy hover:text-szafirowy`;
+}
+---
+
+<header class="border-b border-gray-200 bg-white sticky top-0 z-50">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-14">
+      <!-- Logo -->
+      <a
+        href={isEn ? '/en/' : '/'}
+        class="text-grafitowy font-bold text-xl tracking-tight no-underline hover:text-szafirowy transition-colors"
+      >
+        AIDMED
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-6" aria-label="Navigation">
+        {navLinks.map(({ href, label }) => (
+          <a href={href} class={linkClass(href)}>
+            {label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Language Switcher -->
+      <a
+        href={alternateHref}
+        class="text-sm font-medium text-grafitowy hover:text-szafirowy no-underline border border-gray-300 rounded px-2.5 py-1 transition-colors hover:border-szafirowy"
+        title={isEn ? 'Przełącz na polski' : 'Switch to English'}
+      >
+        {isEn ? 'PL' : 'EN'}
+      </a>
+    </div>
+
+    <!-- Mobile Nav -->
+    <nav class="md:hidden flex overflow-x-auto gap-4 pb-2 -mx-1 px-1" aria-label="Mobile navigation">
+      {navLinks.map(({ href, label }) => (
+        <a href={href} class={linkClass(href) + ' whitespace-nowrap'}>
+          {label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>

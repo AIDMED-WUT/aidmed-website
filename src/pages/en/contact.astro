@@ -1,0 +1,85 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<Layout
+  title="Contact – AIDMED | Faculty MiNI WUT"
+  description="Contact information for the AIDMED research group – address, email, location at Faculty MiNI WUT."
+  lang="en"
+  alternateHref="/kontakt"
+  altLang="pl"
+>
+  <Header lang="en" alternateHref="/kontakt" currentPath="/en/contact" />
+
+  <main class="flex-1">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+      <header class="mb-8">
+        <h1 class="text-3xl font-bold text-grafitowy mb-2">Contact</h1>
+      </header>
+
+      <div class="grid sm:grid-cols-2 gap-8 mb-10">
+        <div>
+          <h2 class="text-lg font-semibold text-grafitowy mb-3">Address</h2>
+          <address class="not-italic text-gray-700 leading-relaxed text-sm">
+            <p class="font-medium">Faculty of Mathematics and Information Sciences</p>
+            <p>Warsaw University of Technology</p>
+            <p>Koszykowa 75 St.</p>
+            <p>00-662 Warsaw, Poland</p>
+            <p class="mt-2 text-gray-500">Building 5, Room 556</p>
+          </address>
+        </div>
+
+        <div>
+          <h2 class="text-lg font-semibold text-grafitowy mb-3">Contact Details</h2>
+          <dl class="space-y-3 text-sm">
+            <div>
+              <dt class="font-medium text-gray-500 text-xs uppercase tracking-wide">E-mail</dt>
+              <dd>
+                <a href="mailto:aidmed.mini@pw.edu.pl" class="text-szafirowy hover:underline">
+                  aidmed.mini@pw.edu.pl
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt class="font-medium text-gray-500 text-xs uppercase tracking-wide">Website</dt>
+              <dd>
+                <a href="http://aidmed.pl" class="text-szafirowy hover:underline" target="_blank" rel="noopener noreferrer">
+                  aidmed.pl
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt class="font-medium text-gray-500 text-xs uppercase tracking-wide">Faculty MiNI</dt>
+              <dd>
+                <a href="https://www.mini.pw.edu.pl" class="text-szafirowy hover:underline" target="_blank" rel="noopener noreferrer">
+                  mini.pw.edu.pl
+                </a>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <!-- Map embed -->
+      <div class="rounded-lg overflow-hidden border border-gray-200 mb-8">
+        <iframe
+          title="Location of Faculty MiNI WUT"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=21.006,52.218,21.018,52.226&layer=mapnik&marker=52.2216,21.0117"
+          width="100%"
+          height="300"
+          style="border: 0;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+
+      <p class="text-sm text-gray-500">
+        Public transport: Metro Line M1, stop Politechnika; tram lines: 7, 9, 24, 25, 26; bus lines: 107, 171, 175, 190.
+      </p>
+    </div>
+  </main>
+
+  <Footer lang="en" />
+</Layout>

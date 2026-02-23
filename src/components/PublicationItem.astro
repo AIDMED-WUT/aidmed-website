@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  pub: CollectionEntry<'publications'>;
+  lang: 'pl' | 'en';
+}
+
+const { pub, lang } = Astro.props;
+const { data } = pub;
+const isEn = lang === 'en';
+
+const venue = data.journal ?? data.booktitle ?? '';
+const link = data.doi
+  ? `https://doi.org/${data.doi}`
+  : data.url ?? null;
+const ifLabel = isEn ? 'IF' : 'IF';
+---
+
+<article class="py-3 border-b border-gray-100 last:border-0">
+  <div class="text-sm text-gray-600 mb-0.5">
+    {data.authors.join(', ')}
+    <span class="text-gray-400 ml-1">({data.year})</span>
+  </div>
+  <div class="font-medium text-grafitowy leading-snug">
+    {link ? (
+      <a href={link} class="text-szafirowy hover:underline" target="_blank" rel="noopener noreferrer">
+        {data.title}
+      </a>
+    ) : (
+      <span>{data.title}</span>
+    )}
+  </div>
+  {venue && (
+    <div class="text-sm text-gray-500 mt-0.5 italic">{venue}</div>
+  )}
+  <div class="flex items-center gap-2 mt-1">
+    {data.impact_factor && (
+      <span class="inline-flex items-center text-xs font-medium bg-mietowy/20 text-grafitowy px-2 py-0.5 rounded">
+        {ifLabel} {data.impact_factor}
+      </span>
+    )}
+    {data.doi && (
+      <span class="text-xs text-gray-400">DOI: {data.doi}</span>
+    )}
+  </div>
+</article>

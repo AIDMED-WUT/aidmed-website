@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  seminar: CollectionEntry<'seminars'>;
+  lang: 'pl' | 'en';
+  showLink?: boolean;
+}
+
+const { seminar, lang, showLink = true } = Astro.props;
+const { data } = seminar;
+const isEn = lang === 'en';
+
+const title = isEn ? data.title : (data.title_pl ?? data.title);
+const slugBase = isEn ? `/en/seminars/${seminar.slug}` : `/seminaria/${seminar.slug}`;
+const hasDetail = !!(data.abstract || data.abstract_pl);
+
+// Only show the abstract that matches the current language
+const abstractToShow = isEn ? data.abstract : data.abstract_pl;
+const expandLabel = isEn ? 'Abstract' : 'Streszczenie';
+
+const dateFormatted = new Date(data.date).toLocaleDateString(
+  isEn ? 'en-GB' : 'pl-PL',
+  { year: 'numeric', month: 'long', day: 'numeric' }
+);
+---
+
+<article class="py-3 border-b border-gray-100 last:border-0">
+  <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-4">
+    <time
+      datetime={data.date}
+      class="text-sm text-gray-500 shrink-0 font-mono w-[20ch] pt-px"
+    >
+      {dateFormatted}
+    </time>
+    <div class="flex-1">
+      <span class="font-medium text-grafitowy">{data.speaker}</span>
+      {(isEn ? data.affiliation_en : data.affiliation_pl) && (
+        <span class="text-sm text-gray-500"> — {isEn ? data.affiliation_en : data.affiliation_pl}</span>
+      )}
+      <div class="mt-0.5">
+        {showLink && hasDetail ? (
+          <a href={slugBase} class="text-szafirowy hover:underline text-sm">
+            {title}
+          </a>
+        ) : (
+          <span class="text-sm text-gray-700">{title}</span>
+        )}
+      </div>
+
+      {abstractToShow && (
+        <details class="mt-2 group">
+          <summary class="list-none cursor-pointer text-xs text-gray-400 hover:text-szafirowy select-none w-fit transition-colors [&::-webkit-details-marker]:hidden">
+            <span class="inline-block group-open:rotate-90 transition-transform mr-1">▶</span>{expandLabel}
+          </summary>
+          <p class="mt-2 text-sm text-gray-600 leading-relaxed border-l-2 border-gray-200 pl-3">
+            {abstractToShow}
+          </p>
+        </details>
+      )}
+    </div>
+  </div>
+</article>

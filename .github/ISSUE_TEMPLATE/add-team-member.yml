@@ -1,0 +1,85 @@
+name: "Add Team Member"
+description: "Add a new team member to the AIDMED website"
+title: "[Team] "
+labels: ["add-team-member"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Full Name
+      description: Full name of the team member
+      placeholder: "Jan Kowalski"
+    validations:
+      required: true
+
+  - type: input
+    id: role_en
+    attributes:
+      label: Role (English)
+      description: Role or position in English
+      placeholder: "PhD Student, Professor, Researcher, Collaborator"
+    validations:
+      required: true
+
+  - type: input
+    id: role_pl
+    attributes:
+      label: Role (Polish)
+      description: Role or position in Polish (optional)
+      placeholder: "Doktorant, Profesor, Badacz, Współpracownik"
+
+  - type: input
+    id: affiliation_pl
+    attributes:
+      label: Affiliation (Polish)
+      description: Institutional affiliation in Polish (optional)
+      placeholder: "Wydział MiNI PW"
+
+  - type: input
+    id: affiliation_en
+    attributes:
+      label: Affiliation (English)
+      description: Institutional affiliation in English (optional)
+      placeholder: "Faculty of MiNI, WUT"
+
+  - type: input
+    id: email
+    attributes:
+      label: Email
+      description: Contact email (optional)
+      placeholder: "jan.kowalski@pw.edu.pl"
+
+  - type: input
+    id: linkedin
+    attributes:
+      label: LinkedIn
+      description: Full LinkedIn profile URL (optional)
+      placeholder: "https://www.linkedin.com/in/jan-kowalski"
+
+  - type: input
+    id: github
+    attributes:
+      label: GitHub URL
+      description: Full GitHub profile URL (optional)
+      placeholder: "https://github.com/jan-kowalski"
+
+  - type: input
+    id: picture
+    attributes:
+      label: Picture
+      description: Filename of photo in public/images/team/ (optional, upload the file separately)
+      placeholder: "jan-kowalski.jpg"
+
+  - type: input
+    id: research_areas
+    attributes:
+      label: Research Areas
+      description: Comma-separated research areas (optional)
+      placeholder: "Medical image analysis, Deep learning, CT imaging"
+
+  - type: input
+    id: order
+    attributes:
+      label: Order
+      description: Display order on the team page (optional, lower numbers appear first)
+      placeholder: "10"

@@ -1,0 +1,132 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const seminars = await getCollection('seminars');
+  return seminars.map((seminar) => ({
+    params: { slug: seminar.slug },
+    props: { seminar },
+  }));
+}
+
+const { seminar } = Astro.props;
+const { data } = seminar;
+const { Content } = await render(seminar);
+
+const dateFormatted = new Date(data.date).toLocaleDateString('pl-PL', {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: data.title_pl ?? data.title,
+  startDate: data.date,
+  location: {
+    '@type': 'Place',
+    name: 'Wydział MiNI PW, sala 318',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'ul. Koszykowa 75',
+      addressLocality: 'Warszawa',
+      postalCode: '00-662',
+      addressCountry: 'PL',
+    },
+  },
+  organizer: {
+    '@type': 'Organization',
+    name: 'AIDMED',
+  },
+  performer: {
+    '@type': 'Person',
+    name: data.speaker,
+  },
+};
+---
+
+<Layout
+  title={`${data.title_pl ?? data.title} – Seminaria AIDMED`}
+  description={data.abstract_pl ?? data.abstract ?? `Seminarium AIDMED: ${data.speaker}`}
+  lang="pl"
+  alternateHref={`/en/seminars/${seminar.slug}`}
+  altLang="en"
+  ogType="event"
+  jsonLd={jsonLd}
+>
+  <Header lang="pl" alternateHref={`/en/seminars/${seminar.slug}`} currentPath={`/seminaria/${seminar.slug}`} />
+
+  <main class="flex-1">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+      <a href="/seminaria" class="text-sm text-szafirowy hover:underline mb-6 inline-block">
+        ← Powrót do seminariów
+      </a>
+
+      <article>
+        <header class="mb-8">
+          <time datetime={data.date} class="text-sm text-gray-500 font-mono">{dateFormatted}</time>
+          <h1 class="text-2xl sm:text-3xl font-bold text-grafitowy mt-2 leading-tight">
+            {data.title_pl ?? data.title}
+          </h1>
+          {(data.title_pl && data.title) && data.title_pl !== data.title && (
+            <p class="text-base text-gray-500 mt-1 italic">{data.title}</p>
+          )}
+
+          <div class="mt-4 p-4 bg-surface rounded-lg border border-gray-100">
+            <dl class="grid sm:grid-cols-2 gap-3 text-sm">
+              <div>
+                <dt class="font-medium text-gray-500">Prelegent</dt>
+                <dd class="text-grafitowy">{data.speaker}</dd>
+              </div>
+              {(data.affiliation_pl ?? data.affiliation_en) && (
+                <div>
+                  <dt class="font-medium text-gray-500">Afiliacja</dt>
+                  <dd class="text-grafitowy">{data.affiliation_pl ?? data.affiliation_en}</dd>
+                </div>
+              )}
+              {data.slides && (
+                <div>
+                  <dt class="font-medium text-gray-500">Materiały</dt>
+                  <dd>
+                    <a href={data.slides} class="text-szafirowy hover:underline" target="_blank" rel="noopener noreferrer">
+                      Slajdy (PDF)
+                    </a>
+                  </dd>
+                </div>
+              )}
+            </dl>
+          </div>
+        </header>
+
+        {(data.abstract_pl || data.abstract) && (
+          <section>
+            <h2 class="text-lg font-semibold text-grafitowy mb-3">Streszczenie</h2>
+            <div class="prose prose-gray max-w-none text-gray-700 leading-relaxed">
+              <p>{data.abstract_pl ?? data.abstract}</p>
+            </div>
+          </section>
+        )}
+
+        {(data.abstract_pl && data.abstract && data.abstract_pl !== data.abstract) && (
+          <section class="mt-6">
+            <h2 class="text-lg font-semibold text-grafitowy mb-3">Abstract (English)</h2>
+            <div class="prose prose-gray max-w-none text-gray-600 leading-relaxed italic">
+              <p>{data.abstract}</p>
+            </div>
+          </section>
+        )}
+
+        <div class="mt-8 prose prose-gray max-w-none">
+          <Content />
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <Footer lang="pl" />
+</Layout>

@@ -1,0 +1,57 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import SeminarCard from '../../components/SeminarCard.astro';
+import { getCollection } from 'astro:content';
+
+const seminars = await getCollection('seminars');
+seminars.sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+type SeminarEntry = (typeof seminars)[0];
+const byYear: Record<number, SeminarEntry[]> = {};
+for (const s of seminars) {
+  const year = new Date(s.data.date).getFullYear();
+  if (!byYear[year]) byYear[year] = [];
+  byYear[year].push(s);
+}
+const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
+---
+
+<Layout
+  title="Seminars – AIDMED | Faculty MiNI WUT"
+  description="AIDMED seminar series 'Computer Science in Medicine and Biology'. Wednesdays, 12:30, Room 318, Faculty MiNI WUT."
+  lang="en"
+  alternateHref="/seminaria"
+  altLang="pl"
+>
+  <Header lang="en" alternateHref="/seminaria" currentPath="/en/seminars" />
+
+  <main class="flex-1">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+      <header class="mb-8">
+        <h1 class="text-3xl font-bold text-grafitowy mb-2">Seminars</h1>
+        <p class="text-gray-600 leading-relaxed">
+          Seminar series <em>"Computer Science in Medicine and Biology"</em>, organised by the Department of
+          CAD/CAM Systems Design and Computer-Aided Medical Support.
+        </p>
+        <p class="text-sm text-gray-500 mt-2">
+          📅 Wednesdays, 12:30 &nbsp;·&nbsp; 📍 Room 318, Faculty MiNI WUT
+        </p>
+      </header>
+
+      {years.map((year) => (
+        <section class="mb-8">
+          <h2 class="text-lg font-semibold text-szafirowy mb-3 border-b border-gray-200 pb-1">{year}</h2>
+          <div>
+            {byYear[year].map((seminar) => (
+              <SeminarCard seminar={seminar} lang="en" />
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </main>
+
+  <Footer lang="en" />
+</Layout>

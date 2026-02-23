@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --color-grafitowy: #3C3C4C;
+  --color-szafirowy: #7896CF;
+  --color-mietowy: #6ABA9C;
+  --color-surface: #F8F8FA;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    color: var(--color-grafitowy);
+    font-family: var(--font-sans);
+  }
+
+  a {
+    color: var(--color-szafirowy);
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}

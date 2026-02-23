@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pages.mini.pw.edu.pl/~aidmed/sitemap-index.xml

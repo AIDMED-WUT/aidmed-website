@@ -1,0 +1,70 @@
+name: "Add Publication"
+description: "Add a new publication to the AIDMED website"
+title: "[Publication] "
+labels: ["add-publication"]
+body:
+  - type: input
+    id: authors
+    attributes:
+      label: Authors
+      description: Semicolon-separated list of authors (e.g. "A. Przelaskowski; M. Jasionowska"). Use semicolons so that names containing commas (e.g. "Smith Jr., John") are handled correctly.
+      placeholder: "A. Przelaskowski; M. Jasionowska"
+    validations:
+      required: true
+
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      description: Full title of the publication
+    validations:
+      required: true
+
+  - type: input
+    id: journal_or_venue
+    attributes:
+      label: Journal or Venue
+      description: Journal name, book title, or conference name
+    validations:
+      required: true
+
+  - type: input
+    id: year
+    attributes:
+      label: Year
+      description: Publication year
+      placeholder: "2025"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Publication Type
+      options:
+        - journal
+        - book_chapter
+        - conference
+    validations:
+      required: true
+
+  - type: input
+    id: doi
+    attributes:
+      label: DOI
+      description: Digital Object Identifier (optional)
+      placeholder: "10.1016/j...."
+
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      description: Link to publication (optional)
+      placeholder: "https://..."
+
+  - type: input
+    id: impact_factor
+    attributes:
+      label: Impact Factor
+      description: Journal Impact Factor (optional, numeric)
+      placeholder: "2.5"
