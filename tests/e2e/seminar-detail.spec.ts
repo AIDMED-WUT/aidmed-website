@@ -2,9 +2,9 @@ import { test, expect } from '@playwright/test';
 
 const BASE = '/aidmed-website';
 
-// Use the most recent seminar which has an abstract (details toggle)
-const SEMINAR_WITH_ABSTRACT = `${BASE}/seminaria/2025-03-12-holynski-generative-models`;
-const SEMINAR_EN_WITH_ABSTRACT = `${BASE}/en/seminars/2025-03-12-holynski-generative-models`;
+// Slug injected by global-setup.ts from tests/fixtures/seminars/
+const SEMINAR_WITH_ABSTRACT = `${BASE}/seminaria/test-with-abstract`;
+const SEMINAR_EN_WITH_ABSTRACT = `${BASE}/en/seminars/test-with-abstract`;
 
 test.describe('Seminar detail page (PL)', () => {
   test('loads and shows h1 with seminar title', async ({ page }) => {
@@ -15,12 +15,12 @@ test.describe('Seminar detail page (PL)', () => {
 
   test('shows speaker name', async ({ page }) => {
     await page.goto(SEMINAR_WITH_ABSTRACT);
-    await expect(page.locator('article dd').first()).toContainText('Hołyński');
+    await expect(page.locator('article dd').first()).toContainText('Test Fixture Speaker');
   });
 
   test('shows abstract section', async ({ page }) => {
     await page.goto(SEMINAR_WITH_ABSTRACT);
-    await expect(page.getByRole('heading', { name: /streszczenie/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Streszczenie', exact: true })).toBeVisible();
   });
 
   test('back link points to seminars list', async ({ page }) => {

@@ -21,3 +21,6 @@ node_modules/
 .env.local
 /playwright-report/
 /test-results/
+
+# Test fixtures injected into content during E2E runs (copied by global-setup.ts)
+src/content/seminars/test-*.md
