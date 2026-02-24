@@ -3,7 +3,7 @@ import type { Translations } from './pl';
 export const en: Translations = {
   site: {
     name: 'AIDMED',
-    tagline: 'Artificial Intelligence in Medicine',
+    tagline: 'AIDMED',
     description: 'AIDMED research group – computer-aided medical image diagnostics. Faculty of Mathematics and Information Sciences, Warsaw University of Technology.',
   },
   nav: {
@@ -16,10 +16,10 @@ export const en: Translations = {
   },
   home: {
     hero_title: 'AIDMED',
-    hero_subtitle: 'Artificial Intelligence in Medicine',
+    hero_subtitle: 'AIDMED',
     hero_desc: 'An informal research group of scientists and doctoral students working on computer-aided medical image diagnostics.',
     about_title: 'About the Group',
-    about_text: 'AIDMED (Artificial Intelligence in MEDicine) is an informal group of staff and doctoral students at the Faculty of Mathematics and Information Sciences, Warsaw University of Technology, interested in computer-aided medical image diagnostics. We have been active since 2006 within the Department of CAD/CAM Systems Design and Computer-Aided Medical Support.',
+    about_text: 'AIDMED is an informal group of staff and doctoral students at the Faculty of Mathematics and Information Sciences, Warsaw University of Technology, interested in computer-aided medical image diagnostics. We have been active since 2006 within the Department of CAD/CAM Systems Design and Computer-Aided Medical Support.',
     latest_seminar: 'Latest Seminar',
     recent_publication: 'Recent Publication',
     team_size: 'Team Members',

@@ -3,7 +3,8 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://pages.mini.pw.edu.pl/~aidmed',
+  site: 'https://aidmed-wut.github.io/aidmed-website',
+  base: '/aidmed-website',
   integrations: [
     sitemap(),
   ],

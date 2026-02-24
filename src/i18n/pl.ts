@@ -16,10 +16,10 @@ export const pl = {
   },
   home: {
     hero_title: 'AIDMED',
-    hero_subtitle: 'Artificial Intelligence in Medicine',
+    hero_subtitle: 'AIDMED',
     hero_desc: 'Nieformalny zespół naukowców i doktorantów zajmujących się komputerowo wspomaganą diagnostyką obrazów medycznych.',
     about_title: 'O grupie',
-    about_text: 'AIDMED (Artificial Intelligence in MEDicine) to nieformalna grupa pracowników i doktorantów Wydziału Matematyki i Nauk Informacyjnych Politechniki Warszawskiej zainteresowanych komputerowo wspomaganą diagnostyką obrazów medycznych. Działamy od 2006 roku w Zakładzie Projektowania Systemów CAD/CAM i Komputerowego Wspomagania Medycyny.',
+    about_text: 'AIDMED to nieformalna grupa pracowników i doktorantów Wydziału Matematyki i Nauk Informacyjnych Politechniki Warszawskiej zainteresowanych komputerowo wspomaganą diagnostyką obrazów medycznych. Działamy od 2006 roku w Zakładzie Projektowania Systemów CAD/CAM i Komputerowego Wspomagania Medycyny.',
     latest_seminar: 'Ostatnie seminarium',
     recent_publication: 'Ostatnia publikacja',
     team_size: 'Członkowie zespołu',

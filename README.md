@@ -1,6 +1,6 @@
 # AIDMED Website
 
-Website of the AIDMED research group (Artificial Intelligence in Medicine) at the Faculty of Mathematics and Information Sciences, Warsaw University of Technology.
+Website of the AIDMED research group at the Faculty of Mathematics and Information Sciences, Warsaw University of Technology.
 
 **Languages:** Polish (primary) · English (`/en/`)
 
