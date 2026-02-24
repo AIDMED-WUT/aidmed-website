@@ -3,7 +3,7 @@ type DeepString<T> = T extends string ? string : { [K in keyof T]: DeepString<T[
 export const pl = {
   site: {
     name: 'AIDMED',
-    tagline: 'Sztuczna Inteligencja w Medycynie',
+    tagline: 'AIDMED',
     description: 'Grupa badawcza AIDMED – komputerowo wspomagana diagnostyka obrazów medycznych. Wydział MiNI, Politechnika Warszawska.',
   },
   nav: {
