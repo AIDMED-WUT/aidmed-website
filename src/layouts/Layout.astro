@@ -23,8 +23,10 @@ const {
   jsonLd,
 } = Astro.props;
 
-const siteUrl = 'https://pages.mini.pw.edu.pl/~aidmed/';
-const canonical = canonicalURL ?? siteUrl + Astro.url.pathname;
+const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const canonical = canonicalURL ?? Astro.url.href;
+const altHrefFull = alternateHref ? site + alternateHref : undefined;
 ---
 
 <!doctype html>
@@ -35,7 +37,7 @@ const canonical = canonicalURL ?? siteUrl + Astro.url.pathname;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
@@ -46,11 +48,11 @@ const canonical = canonicalURL ?? siteUrl + Astro.url.pathname;
     <meta property="og:locale" content={lang === 'pl' ? 'pl_PL' : 'en_US'} />
 
     <!-- hreflang -->
-    {alternateHref && altLang && (
-      <link rel="alternate" hreflang={altLang} href={alternateHref} />
+    {altHrefFull && altLang && (
+      <link rel="alternate" hreflang={altLang} href={altHrefFull} />
     )}
     <link rel="alternate" hreflang={lang} href={canonical} />
-    <link rel="alternate" hreflang="x-default" href={siteUrl + '/'} />
+    <link rel="alternate" hreflang="x-default" href={site + '/'} />
 
     <!-- JSON-LD -->
     {jsonLd && (

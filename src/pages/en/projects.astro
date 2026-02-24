@@ -24,7 +24,7 @@ const rendered = await Promise.all(en.map(renderProject));
   alternateHref="/projekty"
   altLang="pl"
 >
-  <Header lang="en" alternateHref="/projekty" currentPath="/en/projects" />
+  <Header lang="en" alternateHref="/projekty" currentPath={Astro.url.pathname} />
 
   <main class="flex-1">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10">

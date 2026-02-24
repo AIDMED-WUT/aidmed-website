@@ -11,7 +11,7 @@ import Footer from '../components/Footer.astro';
   alternateHref="/en/contact"
   altLang="en"
 >
-  <Header lang="pl" alternateHref="/en/contact" currentPath="/kontakt" />
+  <Header lang="pl" alternateHref="/en/contact" currentPath={Astro.url.pathname} />
 
   <main class="flex-1">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10">

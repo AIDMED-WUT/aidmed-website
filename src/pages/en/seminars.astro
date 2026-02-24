@@ -25,7 +25,7 @@ const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
   alternateHref="/seminaria"
   altLang="pl"
 >
-  <Header lang="en" alternateHref="/seminaria" currentPath="/en/seminars" />
+  <Header lang="en" alternateHref="/seminaria" currentPath={Astro.url.pathname} />
 
   <main class="flex-1">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10">

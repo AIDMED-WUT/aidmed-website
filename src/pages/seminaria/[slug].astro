@@ -12,6 +12,7 @@ export async function getStaticPaths() {
   }));
 }
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const { seminar } = Astro.props;
 const { data } = seminar;
 const { Content } = await render(seminar);
@@ -59,11 +60,11 @@ const jsonLd = {
   ogType="event"
   jsonLd={jsonLd}
 >
-  <Header lang="pl" alternateHref={`/en/seminars/${seminar.slug}`} currentPath={`/seminaria/${seminar.slug}`} />
+  <Header lang="pl" alternateHref={`/en/seminars/${seminar.slug}`} currentPath={Astro.url.pathname} />
 
   <main class="flex-1">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
-      <a href="/seminaria" class="text-sm text-szafirowy hover:underline mb-6 inline-block">
+      <a href={`${base}/seminaria`} class="text-sm text-szafirowy hover:underline mb-6 inline-block">
         ← Powrót do seminariów
       </a>
 

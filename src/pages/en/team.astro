@@ -17,7 +17,7 @@ const activeMembers = team.filter(m => m.data.active);
   alternateHref="/zespol"
   altLang="pl"
 >
-  <Header lang="en" alternateHref="/zespol" currentPath="/en/team" />
+  <Header lang="en" alternateHref="/zespol" currentPath={Astro.url.pathname} />
 
   <main class="flex-1">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10">

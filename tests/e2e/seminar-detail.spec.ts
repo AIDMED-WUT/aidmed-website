@@ -1,8 +1,10 @@
 import { test, expect } from '@playwright/test';
 
+const BASE = '/aidmed-website';
+
 // Use the most recent seminar which has an abstract (details toggle)
-const SEMINAR_WITH_ABSTRACT = '/seminaria/2025-03-12-holynski-generative-models';
-const SEMINAR_EN_WITH_ABSTRACT = '/en/seminars/2025-03-12-holynski-generative-models';
+const SEMINAR_WITH_ABSTRACT = `${BASE}/seminaria/2025-03-12-holynski-generative-models`;
+const SEMINAR_EN_WITH_ABSTRACT = `${BASE}/en/seminars/2025-03-12-holynski-generative-models`;
 
 test.describe('Seminar detail page (PL)', () => {
   test('loads and shows h1 with seminar title', async ({ page }) => {
@@ -26,7 +28,7 @@ test.describe('Seminar detail page (PL)', () => {
     const backLink = page.getByRole('link', { name: /powrót do seminariów/i });
     await expect(backLink).toBeVisible();
     const href = await backLink.getAttribute('href');
-    expect(href).toBe('/seminaria');
+    expect(href).toBe(`${BASE}/seminaria`);
   });
 });
 
@@ -42,13 +44,13 @@ test.describe('Seminar detail page (EN)', () => {
     const backLink = page.getByRole('link', { name: /back to seminars/i });
     await expect(backLink).toBeVisible();
     const href = await backLink.getAttribute('href');
-    expect(href).toBe('/en/seminars');
+    expect(href).toBe(`${BASE}/en/seminars`);
   });
 });
 
 test.describe('Seminar card abstract toggle', () => {
   test('details element expands when clicked', async ({ page }) => {
-    await page.goto('/seminaria');
+    await page.goto(`${BASE}/seminaria`);
     // Find a seminar card that has a <details> element (abstract toggle)
     const details = page.locator('main article details').first();
     await expect(details).toBeVisible();

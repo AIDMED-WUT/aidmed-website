@@ -18,7 +18,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'npm run build && npm run preview',
-    url: 'http://localhost:4321',
+    url: 'http://localhost:4321/aidmed-website/',
     reuseExistingServer: !process.env.CI,
     timeout: 30000,
   },

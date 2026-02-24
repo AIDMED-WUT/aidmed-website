@@ -12,7 +12,8 @@ const { data } = seminar;
 const isEn = lang === 'en';
 
 const title = isEn ? data.title : (data.title_pl ?? data.title);
-const slugBase = isEn ? `/en/seminars/${seminar.slug}` : `/seminaria/${seminar.slug}`;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const slugBase = isEn ? `${base}/en/seminars/${seminar.slug}` : `${base}/seminaria/${seminar.slug}`;
 const hasDetail = !!(data.abstract || data.abstract_pl);
 
 // Only show the abstract that matches the current language
