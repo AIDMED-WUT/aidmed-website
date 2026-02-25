@@ -13,7 +13,8 @@ const isEn = lang === 'en';
 const role = isEn ? data.role : (data.role_pl ?? data.role);
 const affiliation = isEn ? data.affiliation_en : data.affiliation_pl;
 const researchLabel = isEn ? 'Research areas' : 'Obszary badań';
-const picture = data.picture ?? '/images/team/placeholder.svg';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const picture = `${base}${data.picture ?? '/images/team/placeholder.svg'}`;
 ---
 
 <article class="bg-surface rounded-lg p-5 border border-gray-100">
